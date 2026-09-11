@@ -1,56 +1,72 @@
-# Welcome to your Expo app 👋
+# WhichCard
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+A location-aware credit-card rewards picker for iOS/Android, built with Expo + React Native.
 
-## Get started
+Point it at where you're standing and it tells you which card in your wallet earns the
+most there.
 
-1. Install dependencies
+**How it works:** the app reads your GPS position → queries the
+[Overpass API](https://overpass-api.de/) (OpenStreetMap) for nearby merchants → maps
+the merchant's OSM tag to a spend category (`dining`, `groceries`, `gas`, ...) → scores
+that category against your wallet using a table of card earning rates → tells you which
+card to pull out.
 
-   ```bash
-   npm install
-   ```
+Because OSM merchant tagging is inconsistent, the app also lets users **correct** a
+merchant's category, and those corrections are shared with everyone.
 
-2. Start the app
+---
 
-   ```bash
-   npx expo start
-   ```
+## Status
 
-In the output, you'll find options to open the app in a
+| Piece | State |
+|---|---|
+| Expo app running on a physical device | ✅ |
+| GPS → nearby merchants (Overpass) | in progress |
+| Card scoring against wallet | in progress |
+| Backend REST API + database | planned |
+| Accounts / auth | planned |
+| Crowdsourced category corrections | planned |
+| Local notification on a high-multiplier match | planned |
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+## Repo layout
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
-
-```bash
-npm run reset-project
+```
+/            Expo React Native app (expo-router, TypeScript)
+  src/app/     screens (file-based routing)
+  src/lib/     card scoring, Overpass client, category mapping
+  data/        card earning-rate table
+/server/     backend REST API (deployed separately)
+DEVLOG.md    running log of what broke and how it was fixed
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+## Running the app
 
-### Other setup steps
+Requires Node 20+ and a phone with [Expo Go](https://expo.dev/go) installed.
 
-- To set up ESLint for linting, run `npx expo lint`, or follow our guide on ["Using ESLint and Prettier"](https://docs.expo.dev/guides/using-eslint/)
-- If you'd like to set up unit testing, follow our guide on ["Unit Testing with Jest"](https://docs.expo.dev/develop/unit-testing/)
-- Learn more about the TypeScript setup in this template in our guide on ["Using TypeScript"](https://docs.expo.dev/guides/typescript/)
+```bash
+git clone https://github.com/akshara-rm34/whichcard.git
+cd whichcard
+npm install
+npx expo start
+```
 
-## Learn more
+Then scan the QR code with your phone's camera (iOS) or the Expo Go app (Android).
 
-To learn more about developing your project with Expo, look at the following resources:
+**If the app never connects:** you're probably on a network with client isolation
+(common on campus/guest wifi — check whether your machine's IP is in the `100.64.0.0/10`
+CGNAT range). Use a tunnel instead, which relays through a public server and works
+regardless:
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+```bash
+npx expo start --tunnel
+```
 
-## Join the community
+## Running the backend
 
-Join our community of developers creating universal apps.
+See [`server/README.md`](server/README.md).
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+## Credits
+
+Card earning-rate data (`data/cards.json`) is hand-curated from public issuer
+information, originally compiled for a separate credit-card rewards project.
+Field names mirror the Rewards Credit Card API schema.

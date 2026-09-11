@@ -1,11 +1,11 @@
 {
   "expo": {
-    "name": "hereapp",
-    "slug": "hereapp",
+    "name": "WhichCard",
+    "slug": "whichcard",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "hereapp",
+    "scheme": "whichcard",
     "userInterfaceStyle": "automatic",
     "ios": {
       "icon": "./assets/expo.icon"
