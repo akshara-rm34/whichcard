@@ -91,3 +91,63 @@ Problem 4.
 **Lesson:** OpenStreetMap coverage varies enormously by area. This app works better in
 a dense commercial district than on a quiet campus, which is a property of the data
 source and not something the code can fix.
+
+---
+
+## 2026-09-11 — Backend deployed
+
+Vercel serverless functions + Neon Postgres, both free tier. Live at
+https://whichcard-api.vercel.app
+
+**Deliberate ordering:** `/api/health` was deployed on its own, before any real logic,
+to prove the deploy pipeline worked while there were ten lines of code to debug. It
+returned 200 on the first try, so everything after that was known to be application
+code rather than platform configuration.
+
+### Problem 6 — Neon provisioning needs a human
+`vercel integration add neon` stopped with
+`integration_terms_acceptance_required` — a legal agreement between the account owner
+and Neon, which no automated step should click through. Accepted via
+`vercel integration accept-terms neon --yes`, then re-ran the install; the resource
+(`neon-orange-arrow`) provisioned and auto-connected to the Vercel project, writing
+`DATABASE_URL` into `.env.local`.
+
+**Lesson:** some setup steps are blocked on consent rather than on tooling, and that's
+the correct design.
+
+### Problem 7 — migration script couldn't resolve its dependency
+The first migration script was written into a scratch directory outside the project and
+failed with `ERR_MODULE_NOT_FOUND: Cannot find package '@neondatabase/serverless'` —
+Node resolves packages by walking up from the *script's* location, not the working
+directory.
+
+*Fix:* moved it to `server/scripts/migrate.mjs`, where it belongs anyway — a
+collaborator setting up their own database needs it.
+
+### Endpoint testing
+All endpoints were tested against the deployed API with live HTTP requests, including
+the failure paths:
+
+| # | Check | Result |
+|---|---|---|
+| 1 | `GET /api/health` | 200 |
+| 2 | signup | 201 + token |
+| 3 | signup with an email already registered | 409 |
+| 4 | password under 8 characters | 400 |
+| 5 | login with wrong password | 401 |
+| 6 | login with unknown email | 401, **byte-identical to #5** |
+| 7 | login correctly | 200 + token |
+| 8 | `GET /api/wallet` with no token | 401 |
+| 9–10 | PUT then GET wallet | round-trips correctly |
+| 11 | PUT wallet with `cards` not an array | 400 |
+| 12 | corrections for an uncorrected merchant | `category: null` |
+| 13–14 | POST then GET a correction | 201, then 1 vote |
+| 15 | voting again on the same merchant | vote **updated**, total stayed 1 |
+| 16 | correction with an invalid category | 400 |
+| 17 | correction with no auth | 401 |
+| 18–19 | POST event, GET aggregates | 201, then counts |
+
+Checks 5 and 6 mattering is the point of writing them: an endpoint that answers
+differently for "no such account" and "wrong password" tells an attacker which email
+addresses are worth attacking. Check 15 confirms the `(osm_id, user_id)` primary key
+prevents ballot-stuffing at the database level rather than trusting application logic.

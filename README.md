@@ -23,8 +23,8 @@ merchant's category, and those corrections are shared with everyone.
 | Expo app running on a physical device | ✅ |
 | GPS → nearby merchants (Overpass) | in progress |
 | Card scoring against wallet | in progress |
-| Backend REST API + database | planned |
-| Accounts / auth | planned |
+| Backend REST API + database | ✅ deployed |
+| Accounts / auth | ✅ on the backend |
 | Crowdsourced category corrections | planned |
 | Local notification on a high-multiplier match | planned |
 
@@ -61,9 +61,14 @@ regardless:
 npx expo start --tunnel
 ```
 
-## Running the backend
+## Backend
 
-See [`server/README.md`](server/README.md).
+Live at **https://whichcard-api.vercel.app** — try
+[`/api/health`](https://whichcard-api.vercel.app/api/health).
+
+Vercel serverless functions + Neon Postgres, both free tier. Accounts, private
+wallets, crowdsourced merchant category corrections, and usage analytics.
+Full endpoint list and setup in [`server/README.md`](server/README.md).
 
 ## Credits
 
