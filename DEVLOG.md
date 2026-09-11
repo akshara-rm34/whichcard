@@ -44,3 +44,50 @@ route. Restarted again without `CI=1`; watch mode enabled.
 
 **Lesson:** when a flag is added to make a command non-interactive, check what else
 that flag turns off. `CI=1` is not a neutral "don't prompt me" switch.
+
+---
+
+## 2026-09-11 — Core loop: GPS → Overpass → category → card
+
+Built the app's main flow (issues #1–#4): read GPS, find nearby merchants from
+OpenStreetMap, map each merchant to a spend category, rank the wallet against it.
+
+Card earning-rate data (`data/cards.json`, 16 cards) is reused from a previous
+credit-card rewards project, so the scoring layer started from real data rather than
+invented numbers.
+
+### Problem 4 — Overpass 504s under load
+The very first real query to `https://overpass-api.de/api/interpreter` failed:
+
+```
+http 504
+<?xml ...><p><strong>Error</strong>: runtime error: open64: 0 Success
+/osm3s_osm_base Dispatcher_Client::request_read_and_idx::timeout
+```
+
+Two things worth noting. The error arrived as an **XML page, not JSON**, so a client
+that assumes `response.ok` implies parseable JSON will throw a confusing
+`SyntaxError` instead of a useful message. And an identical retry ~20 seconds later
+returned `200` with valid data — so this is transient server load, not a malformed
+query.
+
+*Fix:* try a list of endpoints in order (main instance, then the `overpass.kumi.systems`
+mirror), and wrap `response.json()` in its own try/catch so a non-JSON body produces a
+readable error rather than a parser crash.
+
+**Lesson:** a free, keyless, volunteer-run API is a real dependency with real failure
+modes. Handling only `!response.ok` would not have been enough here.
+
+### Problem 5 — sparse OSM coverage at a 250m radius
+Test query at a Georgia Tech coordinate (33.7756, -84.3963) returned only three named
+merchants: Blue Donkey Coffee, Kaldi's Coffee, and the Ferst Center. Correctly mapped
+(`amenity=cafe` → dining, `amenity=theatre` → entertainment), but too few results to be
+a useful picker.
+
+*Fix:* widened the search radius from 250m to 400m. This is a genuine tradeoff — a
+larger radius means a slower, heavier Overpass query and so a higher chance of hitting
+Problem 4.
+
+**Lesson:** OpenStreetMap coverage varies enormously by area. This app works better in
+a dense commercial district than on a quiet campus, which is a property of the data
+source and not something the code can fix.

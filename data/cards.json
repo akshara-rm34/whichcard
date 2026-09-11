@@ -1,0 +1,257 @@
+{
+  "note": "Hand-curated from public issuer info, early 2026. Field names mirror the Rewards Credit Card API (rewardscc.com) schema so this file can be swapped for live API data later. Signup bonuses fluctuate — treat those as representative. earnCurrency is the join key for the points-valuation layer.",
+  "fetchedAt": "2026-07-18",
+  "cards": [
+    {
+      "cardKey": "amex-gold",
+      "cardName": "American Express Gold Card",
+      "cardIssuer": "American Express",
+      "cardNetwork": "American Express",
+      "annualFee": 325,
+      "earnCurrency": "membership-rewards",
+      "baseSpendAmount": 1,
+      "spendBonusCategory": [
+        { "spendBonusCategoryName": "dining", "earnMultiplier": 4, "isSpendLimit": true, "spendLimit": 50000, "spendLimitResetPeriod": "year", "spendBonusDesc": "4x at restaurants worldwide, up to $50k/yr" },
+        { "spendBonusCategoryName": "groceries", "earnMultiplier": 4, "isSpendLimit": true, "spendLimit": 25000, "spendLimitResetPeriod": "year", "spendBonusDesc": "4x at US supermarkets, up to $25k/yr" },
+        { "spendBonusCategoryName": "flights", "earnMultiplier": 3, "isSpendLimit": false, "spendBonusDesc": "3x on flights booked directly with airlines or amextravel.com" }
+      ],
+      "signupBonus": { "points": 60000, "spend": 6000, "months": 6 },
+      "signupBonusDesc": "60,000 Membership Rewards points after $6,000 spend in 6 months"
+    },
+    {
+      "cardKey": "amex-platinum",
+      "cardName": "The Platinum Card from American Express",
+      "cardIssuer": "American Express",
+      "cardNetwork": "American Express",
+      "annualFee": 895,
+      "earnCurrency": "membership-rewards",
+      "baseSpendAmount": 1,
+      "spendBonusCategory": [
+        { "spendBonusCategoryName": "flights", "earnMultiplier": 5, "isSpendLimit": true, "spendLimit": 500000, "spendLimitResetPeriod": "year", "spendBonusDesc": "5x on flights booked direct or via amextravel.com, up to $500k/yr" },
+        { "spendBonusCategoryName": "hotels", "earnMultiplier": 5, "isSpendLimit": false, "spendBonusDesc": "5x on prepaid hotels booked via amextravel.com" }
+      ],
+      "signupBonus": { "points": 80000, "spend": 8000, "months": 6 },
+      "signupBonusDesc": "80,000 Membership Rewards points after $8,000 spend in 6 months"
+    },
+    {
+      "cardKey": "amex-blue-cash-preferred",
+      "cardName": "Blue Cash Preferred Card",
+      "cardIssuer": "American Express",
+      "cardNetwork": "American Express",
+      "annualFee": 95,
+      "earnCurrency": "cashback",
+      "baseSpendAmount": 1,
+      "spendBonusCategory": [
+        { "spendBonusCategoryName": "groceries", "earnMultiplier": 6, "isSpendLimit": true, "spendLimit": 6000, "spendLimitResetPeriod": "year", "spendBonusDesc": "6% at US supermarkets, up to $6k/yr" },
+        { "spendBonusCategoryName": "streaming", "earnMultiplier": 6, "isSpendLimit": false, "spendBonusDesc": "6% on select US streaming subscriptions" },
+        { "spendBonusCategoryName": "transit", "earnMultiplier": 3, "isSpendLimit": false, "spendBonusDesc": "3% on transit (taxis, rideshare, parking, trains)" },
+        { "spendBonusCategoryName": "gas", "earnMultiplier": 3, "isSpendLimit": false, "spendBonusDesc": "3% at US gas stations" }
+      ],
+      "signupBonus": { "cash": 250, "spend": 3000, "months": 6 },
+      "signupBonusDesc": "$250 statement credit after $3,000 spend in 6 months; $0 intro annual fee first year"
+    },
+    {
+      "cardKey": "chase-sapphire-preferred",
+      "cardName": "Chase Sapphire Preferred",
+      "cardIssuer": "Chase",
+      "cardNetwork": "Visa",
+      "annualFee": 95,
+      "earnCurrency": "ultimate-rewards",
+      "baseSpendAmount": 1,
+      "spendBonusCategory": [
+        { "spendBonusCategoryName": "chase-travel", "earnMultiplier": 5, "isSpendLimit": false, "spendBonusDesc": "5x on travel booked through Chase Travel" },
+        { "spendBonusCategoryName": "dining", "earnMultiplier": 3, "isSpendLimit": false, "spendBonusDesc": "3x on dining, including delivery" },
+        { "spendBonusCategoryName": "online-groceries", "earnMultiplier": 3, "isSpendLimit": false, "spendBonusDesc": "3x on online grocery purchases" },
+        { "spendBonusCategoryName": "streaming", "earnMultiplier": 3, "isSpendLimit": false, "spendBonusDesc": "3x on select streaming services" },
+        { "spendBonusCategoryName": "gas", "earnMultiplier": 3, "isSpendLimit": false, "spendBonusDesc": "3x on gas and EV charging (added June 2026)" },
+        { "spendBonusCategoryName": "travel", "earnMultiplier": 2, "isSpendLimit": false, "spendBonusDesc": "2x on all other travel" }
+      ],
+      "signupBonus": { "points": 75000, "spend": 5000, "months": 3 },
+      "signupBonusDesc": "75,000 Ultimate Rewards points after $5,000 spend in 3 months"
+    },
+    {
+      "cardKey": "chase-sapphire-reserve",
+      "cardName": "Chase Sapphire Reserve",
+      "cardIssuer": "Chase",
+      "cardNetwork": "Visa",
+      "annualFee": 795,
+      "earnCurrency": "ultimate-rewards",
+      "baseSpendAmount": 1,
+      "spendBonusCategory": [
+        { "spendBonusCategoryName": "chase-travel", "earnMultiplier": 8, "isSpendLimit": false, "spendBonusDesc": "8x on travel booked through Chase Travel" },
+        { "spendBonusCategoryName": "flights", "earnMultiplier": 4, "isSpendLimit": false, "spendBonusDesc": "4x on flights booked directly with airlines" },
+        { "spendBonusCategoryName": "hotels", "earnMultiplier": 4, "isSpendLimit": false, "spendBonusDesc": "4x on hotels booked directly" },
+        { "spendBonusCategoryName": "dining", "earnMultiplier": 3, "isSpendLimit": false, "spendBonusDesc": "3x on dining worldwide" }
+      ],
+      "signupBonus": { "points": 60000, "spend": 5000, "months": 3 },
+      "signupBonusDesc": "60,000 Ultimate Rewards points after $5,000 spend in 3 months"
+    },
+    {
+      "cardKey": "chase-freedom-unlimited",
+      "cardName": "Chase Freedom Unlimited",
+      "cardIssuer": "Chase",
+      "cardNetwork": "Visa",
+      "annualFee": 0,
+      "earnCurrency": "ultimate-rewards",
+      "baseSpendAmount": 1.5,
+      "spendBonusCategory": [
+        { "spendBonusCategoryName": "chase-travel", "earnMultiplier": 5, "isSpendLimit": false, "spendBonusDesc": "5% on travel booked through Chase Travel" },
+        { "spendBonusCategoryName": "dining", "earnMultiplier": 3, "isSpendLimit": false, "spendBonusDesc": "3% on dining, including delivery" },
+        { "spendBonusCategoryName": "drugstores", "earnMultiplier": 3, "isSpendLimit": false, "spendBonusDesc": "3% at drugstores" }
+      ],
+      "signupBonus": { "cash": 200, "spend": 500, "months": 3 },
+      "signupBonusDesc": "$200 after $500 spend in 3 months"
+    },
+    {
+      "cardKey": "chase-freedom-flex",
+      "cardName": "Chase Freedom Flex",
+      "cardIssuer": "Chase",
+      "cardNetwork": "Mastercard",
+      "annualFee": 0,
+      "earnCurrency": "ultimate-rewards",
+      "baseSpendAmount": 1,
+      "spendBonusCategory": [
+        { "spendBonusCategoryName": "rotating", "earnMultiplier": 5, "isSpendLimit": true, "spendLimit": 1500, "spendLimitResetPeriod": "quarter", "spendBonusDesc": "5% on rotating quarterly categories (activation required), up to $1,500/qtr" },
+        { "spendBonusCategoryName": "chase-travel", "earnMultiplier": 5, "isSpendLimit": false, "spendBonusDesc": "5% on travel booked through Chase Travel" },
+        { "spendBonusCategoryName": "dining", "earnMultiplier": 3, "isSpendLimit": false, "spendBonusDesc": "3% on dining, including delivery" },
+        { "spendBonusCategoryName": "drugstores", "earnMultiplier": 3, "isSpendLimit": false, "spendBonusDesc": "3% at drugstores" }
+      ],
+      "signupBonus": { "cash": 200, "spend": 500, "months": 3 },
+      "signupBonusDesc": "$200 after $500 spend in 3 months"
+    },
+    {
+      "cardKey": "citi-double-cash",
+      "cardName": "Citi Double Cash",
+      "cardIssuer": "Citi",
+      "cardNetwork": "Mastercard",
+      "annualFee": 0,
+      "earnCurrency": "cashback",
+      "baseSpendAmount": 2,
+      "spendBonusCategory": [
+        { "spendBonusCategoryName": "citi-travel", "earnMultiplier": 5, "isSpendLimit": false, "spendBonusDesc": "5% total cash back on hotels and rental cars booked through Citi Travel" }
+      ],
+      "signupBonus": { "cash": 200, "spend": 1500, "months": 6 },
+      "signupBonusDesc": "$200 after $1,500 spend in 6 months"
+    },
+    {
+      "cardKey": "citi-custom-cash",
+      "cardName": "Citi Custom Cash",
+      "cardIssuer": "Citi",
+      "cardNetwork": "Mastercard",
+      "annualFee": 0,
+      "earnCurrency": "cashback",
+      "baseSpendAmount": 1,
+      "spendBonusCategory": [
+        { "spendBonusCategoryName": "top-category", "earnMultiplier": 5, "isSpendLimit": true, "spendLimit": 500, "spendLimitResetPeriod": "month", "spendBonusDesc": "5% on your top eligible spend category each billing cycle (dining, groceries, gas, travel, transit, streaming, drugstores, home improvement, fitness, live entertainment), up to $500/mo" }
+      ],
+      "signupBonusDesc": "$200 after $1,500 spend in 6 months (closed to new applicants as of May 2026)"
+    },
+    {
+      "cardKey": "capital-one-venture",
+      "cardName": "Capital One Venture Rewards",
+      "cardIssuer": "Capital One",
+      "cardNetwork": "Visa",
+      "annualFee": 95,
+      "earnCurrency": "capital-one-miles",
+      "baseSpendAmount": 2,
+      "spendBonusCategory": [
+        { "spendBonusCategoryName": "capital-one-travel-hotels", "earnMultiplier": 5, "isSpendLimit": false, "spendBonusDesc": "5x on hotels and rental cars booked through Capital One Travel" }
+      ],
+      "signupBonus": { "points": 75000, "spend": 4000, "months": 3 },
+      "signupBonusDesc": "75,000 miles after $4,000 spend in 3 months"
+    },
+    {
+      "cardKey": "capital-one-savor",
+      "cardName": "Capital One Savor Cash Rewards",
+      "cardIssuer": "Capital One",
+      "cardNetwork": "Mastercard",
+      "annualFee": 0,
+      "earnCurrency": "cashback",
+      "baseSpendAmount": 1,
+      "spendBonusCategory": [
+        { "spendBonusCategoryName": "dining", "earnMultiplier": 3, "isSpendLimit": false, "spendBonusDesc": "3% on dining" },
+        { "spendBonusCategoryName": "groceries", "earnMultiplier": 3, "isSpendLimit": false, "spendBonusDesc": "3% at grocery stores (excl. superstores)" },
+        { "spendBonusCategoryName": "entertainment", "earnMultiplier": 3, "isSpendLimit": false, "spendBonusDesc": "3% on entertainment" },
+        { "spendBonusCategoryName": "streaming", "earnMultiplier": 3, "isSpendLimit": false, "spendBonusDesc": "3% on popular streaming services" }
+      ],
+      "signupBonus": { "cash": 200, "spend": 500, "months": 3 },
+      "signupBonusDesc": "$200 after $500 spend in 3 months"
+    },
+    {
+      "cardKey": "discover-it-cash-back",
+      "cardName": "Discover it Cash Back",
+      "cardIssuer": "Discover",
+      "cardNetwork": "Discover",
+      "annualFee": 0,
+      "earnCurrency": "cashback",
+      "baseSpendAmount": 1,
+      "spendBonusCategory": [
+        { "spendBonusCategoryName": "rotating", "earnMultiplier": 5, "isSpendLimit": true, "spendLimit": 1500, "spendLimitResetPeriod": "quarter", "spendBonusDesc": "5% on rotating quarterly categories (activation required), up to $1,500/qtr" }
+      ],
+      "signupBonusDesc": "Cashback Match: all cash back earned in the first year is doubled"
+    },
+    {
+      "cardKey": "wells-fargo-active-cash",
+      "cardName": "Wells Fargo Active Cash",
+      "cardIssuer": "Wells Fargo",
+      "cardNetwork": "Visa",
+      "annualFee": 0,
+      "earnCurrency": "cashback",
+      "baseSpendAmount": 2,
+      "spendBonusCategory": [],
+      "signupBonus": { "cash": 200, "spend": 500, "months": 3 },
+      "signupBonusDesc": "$200 after $500 spend in 3 months"
+    },
+    {
+      "cardKey": "wells-fargo-autograph",
+      "cardName": "Wells Fargo Autograph",
+      "cardIssuer": "Wells Fargo",
+      "cardNetwork": "Visa",
+      "annualFee": 0,
+      "earnCurrency": "wells-fargo-rewards",
+      "baseSpendAmount": 1,
+      "spendBonusCategory": [
+        { "spendBonusCategoryName": "dining", "earnMultiplier": 3, "isSpendLimit": false, "spendBonusDesc": "3x at restaurants" },
+        { "spendBonusCategoryName": "travel", "earnMultiplier": 3, "isSpendLimit": false, "spendBonusDesc": "3x on travel" },
+        { "spendBonusCategoryName": "gas", "earnMultiplier": 3, "isSpendLimit": false, "spendBonusDesc": "3x at gas stations" },
+        { "spendBonusCategoryName": "transit", "earnMultiplier": 3, "isSpendLimit": false, "spendBonusDesc": "3x on transit" },
+        { "spendBonusCategoryName": "streaming", "earnMultiplier": 3, "isSpendLimit": false, "spendBonusDesc": "3x on popular streaming services" },
+        { "spendBonusCategoryName": "phone-plans", "earnMultiplier": 3, "isSpendLimit": false, "spendBonusDesc": "3x on phone plans" }
+      ],
+      "signupBonus": { "points": 20000, "spend": 1000, "months": 3 },
+      "signupBonusDesc": "20,000 points after $1,000 spend in 3 months"
+    },
+    {
+      "cardKey": "bofa-customized-cash",
+      "cardName": "Bank of America Customized Cash Rewards",
+      "cardIssuer": "Bank of America",
+      "cardNetwork": "Visa",
+      "annualFee": 0,
+      "earnCurrency": "cashback",
+      "baseSpendAmount": 1,
+      "spendBonusCategory": [
+        { "spendBonusCategoryName": "choice-category", "earnMultiplier": 3, "isSpendLimit": true, "spendLimit": 2500, "spendLimitResetPeriod": "quarter", "spendBonusDesc": "3% in one category of your choice (online shopping, gas/EV, dining, travel, drugstores, or home improvement), up to $2,500/qtr combined with 2% tier" },
+        { "spendBonusCategoryName": "groceries", "earnMultiplier": 2, "isSpendLimit": true, "spendLimit": 2500, "spendLimitResetPeriod": "quarter", "spendBonusDesc": "2% at grocery stores and wholesale clubs, shares the $2,500/qtr cap" }
+      ],
+      "signupBonus": { "cash": 200, "spend": 1000, "months": 3 },
+      "signupBonusDesc": "$200 after $1,000 spend in 90 days"
+    },
+    {
+      "cardKey": "us-bank-altitude-go",
+      "cardName": "US Bank Altitude Go",
+      "cardIssuer": "US Bank",
+      "cardNetwork": "Visa",
+      "annualFee": 0,
+      "earnCurrency": "us-bank-points",
+      "baseSpendAmount": 1,
+      "spendBonusCategory": [
+        { "spendBonusCategoryName": "dining", "earnMultiplier": 4, "isSpendLimit": true, "spendLimit": 2000, "spendLimitResetPeriod": "quarter", "spendBonusDesc": "4x on dining, takeout, and delivery, up to $2,000/qtr" },
+        { "spendBonusCategoryName": "groceries", "earnMultiplier": 2, "isSpendLimit": false, "spendBonusDesc": "2x at grocery stores" },
+        { "spendBonusCategoryName": "gas", "earnMultiplier": 2, "isSpendLimit": false, "spendBonusDesc": "2x at gas stations and EV charging" },
+        { "spendBonusCategoryName": "streaming", "earnMultiplier": 2, "isSpendLimit": false, "spendBonusDesc": "2x on streaming services" }
+      ],
+      "signupBonus": { "points": 20000, "spend": 1000, "months": 3 },
+      "signupBonusDesc": "20,000 points after $1,000 spend in 90 days"
+    }
+  ]
+}
