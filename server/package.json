@@ -1,0 +1,13 @@
+{
+  "name": "whichcard-server",
+  "version": "1.0.0",
+  "private": true,
+  "description": "REST API for WhichCard: accounts, wallets, and crowdsourced merchant category corrections",
+  "devDependencies": {
+    "@types/node": "^22.10.2",
+    "typescript": "^5.7.2"
+  },
+  "dependencies": {
+    "@neondatabase/serverless": "^1.1.0"
+  }
+}
