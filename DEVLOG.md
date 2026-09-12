@@ -151,3 +151,55 @@ Checks 5 and 6 mattering is the point of writing them: an endpoint that answers
 differently for "no such account" and "wrong password" tells an attacker which email
 addresses are worth attacking. Check 15 confirms the `(osm_id, user_id)` primary key
 prevents ballot-stuffing at the database level rather than trusting application logic.
+
+---
+
+## 2026-09-12 — App wired to the backend, and an Overpass bug found on-device
+
+Connected the app to the deployed API: sign-in and a card picker on a new Wallet tab,
+wallet loaded from the server, crowdsourced corrections surfaced and submittable from
+the recommendation card, usage events logged, and a local notification when something
+nearby earns 3x or better.
+
+### Problem 8 — "Could not reach Overpass" on the phone, after a long wait
+First real run on the device sat for roughly 40 seconds and then showed
+`Could not reach Overpass` — despite the same query working from the laptop.
+
+Timing both endpoints directly found it:
+
+```
+https://overpass-api.de/api/interpreter        http 200  time 1.20s  size 5039
+https://overpass.kumi.systems/api/interpreter  http 000  time 45.00s size 0
+```
+
+The main instance was healthy and fast. **The mirror accepted the connection and then
+never responded at all.** So a transient failure on the primary fell through to a
+fallback that hung for the full timeout, and the user was then shown the *mirror's*
+error — which pointed at a network problem that did not exist.
+
+Two separate bugs, both mine:
+
+1. **A hanging fallback is worse than no fallback.** It converts a fast, informative
+   failure into a long wait ending in a misleading message. Fixed by giving each
+   attempt its own timeout, putting the flaky mirror last on a short 6s leash, and
+   retrying the healthy primary once before falling through to it.
+
+2. **Aborted fetches were reported as connection failures.** The handler checked
+   `err.name === 'AbortError'`, which React Native does not reliably set. Every timeout
+   was therefore labelled "could not reach". Fixed by checking
+   `controller.signal.aborted`, which is authoritative regardless of how the platform
+   names the error.
+
+Also changed which error surfaces: the **first** failure is reported rather than the
+last, so a flaky mirror can't relabel the primary's real error.
+
+Added `console.log` timing per attempt, which is how this was confirmed rather than
+assumed — the device's own log after the fix:
+
+```
+LOG [overpass] attempt 1 ok in 3768ms (https://overpass-api.de/api/interpreter)
+```
+
+**Lesson:** redundancy is only redundancy if the backup fails *fast*. An unresponsive
+fallback is a liability, and testing it from a laptop on good wifi would never have
+shown this — it took running on the actual device.

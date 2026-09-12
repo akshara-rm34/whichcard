@@ -9,16 +9,21 @@ import { categoryFromTags, type OsmTags, type SpendCategory } from './categories
  */
 
 /**
- * Endpoints are tried in order. The main instance returns transient 504s under load
- * (observed in testing: `Dispatcher_Client::request_read_and_idx::timeout`, served as
- * an XML error page with a 504 status), so a mirror is worth having.
+ * Attempts, in order, each with its own timeout.
+ *
+ * The main instance is fast when healthy (~1s) but returns transient 504s under load,
+ * so it gets an immediate second try before we give up on it. The kumi mirror is last
+ * and on a short leash: it has been observed accepting a connection and then never
+ * responding at all, and a fallback that hangs is worse than no fallback — it turns a
+ * fast failure into a 40-second wait and then reports the mirror's error instead of
+ * the real one.
  */
-const OVERPASS_ENDPOINTS = [
-  'https://overpass-api.de/api/interpreter',
-  'https://overpass.kumi.systems/api/interpreter',
+const ATTEMPTS: { endpoint: string; timeoutMs: number }[] = [
+  { endpoint: 'https://overpass-api.de/api/interpreter', timeoutMs: 12_000 },
+  { endpoint: 'https://overpass-api.de/api/interpreter', timeoutMs: 12_000 },
+  { endpoint: 'https://overpass.kumi.systems/api/interpreter', timeoutMs: 6_000 },
 ];
 const SEARCH_RADIUS_M = 400;
-const REQUEST_TIMEOUT_MS = 20_000;
 
 export type Merchant = {
   id: string;
@@ -70,9 +75,13 @@ out center tags 60;`;
  * and OSM has a lot of them.
  */
 /** One attempt against one endpoint. Throws OverpassError on any failure. */
-async function requestOnce(endpoint: string, query: string): Promise<{ elements?: unknown }> {
+async function requestOnce(
+  endpoint: string,
+  query: string,
+  timeoutMs: number,
+): Promise<{ elements?: unknown }> {
   const controller = new AbortController();
-  const timeout = setTimeout(() => controller.abort(), REQUEST_TIMEOUT_MS);
+  const timeout = setTimeout(() => controller.abort(), timeoutMs);
 
   let response: Response;
   try {
@@ -83,8 +92,12 @@ async function requestOnce(endpoint: string, query: string): Promise<{ elements?
       signal: controller.signal,
     });
   } catch (err) {
-    if (err instanceof Error && err.name === 'AbortError') {
-      throw new OverpassError('Overpass took too long to respond.');
+    // React Native does not always surface an aborted fetch as name === 'AbortError',
+    // so the signal itself is the reliable indicator that we timed out rather than
+    // failed to connect. Getting this wrong reports a timeout as "could not reach",
+    // which sends you looking for a network problem that isn't there.
+    if (controller.signal.aborted) {
+      throw new OverpassError(`Overpass timed out after ${timeoutMs / 1000}s.`);
     }
     throw new OverpassError('Could not reach Overpass.');
   } finally {
@@ -119,20 +132,32 @@ export async function fetchNearbyMerchants(
   lon: number,
 ): Promise<Merchant[]> {
   const query = buildQuery(lat, lon);
-  let lastError: OverpassError | null = null;
+  let firstError: OverpassError | null = null;
   let payload: { elements?: unknown } | null = null;
 
-  for (const endpoint of OVERPASS_ENDPOINTS) {
+  for (const [index, attempt] of ATTEMPTS.entries()) {
+    const startedAt = Date.now();
     try {
-      payload = await requestOnce(endpoint, query);
+      payload = await requestOnce(attempt.endpoint, query, attempt.timeoutMs);
+      console.log(
+        `[overpass] attempt ${index + 1} ok in ${Date.now() - startedAt}ms (${attempt.endpoint})`,
+      );
       break;
     } catch (err) {
-      lastError = err instanceof OverpassError ? err : new OverpassError('Overpass failed.');
+      const failure =
+        err instanceof OverpassError ? err : new OverpassError('Overpass failed.');
+      console.warn(
+        `[overpass] attempt ${index + 1} failed after ${Date.now() - startedAt}ms ` +
+          `(${attempt.endpoint}): ${failure.message}`,
+      );
+      // Report the first failure, not the last: the primary endpoint's error is the
+      // informative one, and a flaky mirror shouldn't get to relabel it.
+      firstError ??= failure;
     }
   }
 
   if (!payload) {
-    throw lastError ?? new OverpassError('Overpass failed.');
+    throw firstError ?? new OverpassError('Overpass failed.');
   }
 
   const elements = Array.isArray(payload.elements) ? payload.elements : [];
