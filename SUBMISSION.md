@@ -5,9 +5,8 @@
 **Repository:** https://github.com/akshara-rm34/whichcard
 **Live backend API:** https://whichcard-api.vercel.app — health check: https://whichcard-api.vercel.app/api/health
 
-> **TODO before submitting:** drop your screenshots in at the `[SCREENSHOT]` markers,
-> fill in the partner section once Maya's PR lands, and edit anything that doesn't
-> sound like you.
+> **TODO before submitting:** fill in the partner sections (§5) once Maya's PR lands,
+> and edit anything that doesn't sound like you.
 
 ---
 
@@ -59,10 +58,35 @@ since you need identity to attribute and limit votes.
 - How to design and deploy a REST API with authentication that isn't toy-grade
 - How to work in a shared repository with someone else without stepping on each other
 
-[SCREENSHOT: app home screen with merchant list]
-[SCREENSHOT: recommendation showing the multiplier and card]
-[SCREENSHOT: wallet / card picker screen]
-[SCREENSHOT: notification banner]
+### The app
+
+![Merchants near me](docs/screenshots/03-app-merchant-list.png)
+
+*Nearby merchants pulled live from OpenStreetMap, sorted by distance, each already
+resolved to a spend category. Taken in midtown Atlanta at 33.7749, -84.3849.*
+
+![4x recommendation](docs/screenshots/04-recommendation-4x-amex-gold.png)
+
+*Tapping a merchant scores it against my wallet. Taste of Greece resolves to Dining, so
+the Amex Gold's 4x wins — and the app shows the issuer's own wording as the reason, plus
+the $50k/year cap, plus the runners-up so you can see what you'd give up.*
+
+![Signed out](docs/screenshots/05-wallet-signed-out.png)
+![Card picker](docs/screenshots/06-wallet-card-picker.png)
+
+*The Wallet tab. Signed out it's a sign-in form; signed in it's a picker over all 16
+cards, and the selection is stored server-side rather than on the device.*
+
+![Correction submitted](docs/screenshots/07-correction-submitted.png)
+
+*Submitting a category correction. I reclassified Taste of Greece as Entertainment, and
+the recommendation immediately changed — the header now reads `community (1)`, the
+community's answer having overridden the OSM tag, and the best card dropped from 4x Amex
+Gold to 2x Capital One Venture. Anyone else opening the app sees that same correction.*
+
+![Local notification](docs/screenshots/08-local-notification.png)
+
+*A local notification fired when a nearby merchant beat the 3x threshold.*
 
 ---
 
@@ -75,6 +99,25 @@ since you need identity to attribute and limit votes.
 | 3 | Check code into version control, track tasks | https://github.com/akshara-rm34/whichcard — 6 commits, 10 GitHub issues used for tasks and bugs |
 | 4 | Partner checks out, changes, tests, pushes back | See §5 |
 | 5 | Deploy a web service with storage + REST | https://whichcard-api.vercel.app — Vercel serverless functions + Neon Postgres, 9 endpoints |
+
+![Dev server](docs/screenshots/01-dev-server-qr.png)
+
+*The Metro dev server. The phone connects over the LAN at `exp://100.70.92.116:8081`;
+the `iOS Bundled` lines at the bottom are my device pulling bundles.*
+
+![Expo Go](docs/screenshots/02-expo-go-project-list.png)
+
+*WhichCard loaded in Expo Go on my iPhone — a physical device, not a simulator.*
+
+![Health check](docs/screenshots/09-api-health.png)
+
+*The deployed API answering.*
+
+![Analytics](docs/screenshots/10-api-events-analytics.png)
+
+*`GET /api/events` showing real usage collected from my phone: 1 search, 2 lookups, 1
+correction, with `amex-gold` the most-recommended card. Aggregates only — the endpoint
+deliberately never returns individual rows.*
 
 **Exceptional items attempted:**
 
@@ -245,8 +288,20 @@ curl -X POST $API/api/auth/signup \
 Issues were used for tasks and bugs, not just as a checklist — issue #8 is a bug I hit,
 diagnosed, fixed, and closed with the explanation attached.
 
-[SCREENSHOT: GitHub issues list]
-[SCREENSHOT: commit history]
+![Commit history](docs/screenshots/13-commit-history.png)
+
+*Eight commits across three days, each with a message explaining the reasoning rather
+than just the change.*
+
+![Issues](docs/screenshots/11-github-issues.png)
+
+*Issues used to track the work: 7 closed, 3 open. Two are labelled `partner` and
+reserved for Maya.*
+
+![Issue 8](docs/screenshots/12-issue-8-closed-bug.png)
+
+*Issue #8 — a bug I hit, diagnosed, fixed, and closed with the explanation attached,
+including the follow-on bug I caused while fixing it.*
 
 ### Coordination with Maya
 

@@ -217,3 +217,29 @@ overlay. A simulator screenshot wouldn't have revealed it either, since the butt
 there too but easy to ignore when you're clicking with a mouse instead of reaching with
 a thumb. Real-device testing catches a category of problem that reading the code
 cannot.
+
+### Verified on device: notification, corrections, analytics
+All three of the remaining features confirmed working on the physical iPhone:
+
+- **Local notification** fired: *"4x nearby at The Melting Pot — Use your American
+  Express Gold Card."* Tested by temporarily lowering the threshold from 3x to 1x so it
+  would fire regardless of what happened to be nearby, then restored.
+- **Crowdsourced correction** round-tripped: reclassifying Taste of Greece from Dining to
+  Entertainment changed the recommendation from 4x Amex Gold to 2x Capital One Venture,
+  and the header showed `community (1)` — the community answer overriding the OSM tag.
+- **Analytics** recorded it: `GET /api/events` returned
+  `{"lookup":2,"correction":1,"search":1}` with `amex-gold` as top card.
+
+### Problem 10 — screenshots on the Desktop couldn't be copied by path
+Copying the screenshots into the repo failed with `No such file or directory` for every
+file on the Desktop, even though `ls` listed them and the paths looked identical.
+
+The filenames contain a **narrow no-break space (U+202F)** before "PM", not an ordinary
+space — macOS has used that character in screenshot filenames since Sonoma. So a path
+typed with a regular space doesn't match the file that exists.
+
+*Fix:* globbed around it (`Screenshot*3.28.29*.png`) rather than typing the literal name.
+
+**Lesson:** "the file is right there and the path is obviously correct" is exactly the
+situation where an invisible character is worth suspecting. `od -c` confirmed it:
+`342 200 257` is UTF-8 for U+202F.
