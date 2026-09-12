@@ -100,6 +100,14 @@ Gold to 2x Capital One Venture. Anyone else opening the app sees that same corre
 | 4 | Partner checks out, changes, tests, pushes back | See §5 |
 | 5 | Deploy a web service with storage + REST | https://whichcard-api.vercel.app — Vercel serverless functions + Neon Postgres, 9 endpoints |
 
+![Sample template on device](docs/screenshots/00-sample-template-on-device.png)
+
+*The starting point: the stock `expo-router` sample template running on my physical
+iPhone, with its original Home/Explore tabs and "GET STARTED" hints. The heading is the
+one line I changed to confirm Fast Refresh was pushing edits to the device — the app
+updated without a reload. Commit `a4747ef` is this template unmodified; everything after
+it is mine.*
+
 ![Dev server](docs/screenshots/01-dev-server-qr.png)
 
 *The Metro dev server. The phone connects over the LAN at `exp://100.70.92.116:8081`;
