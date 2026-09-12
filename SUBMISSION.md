@@ -140,6 +140,67 @@ deliberately never returns individual rows.*
 
 ---
 
+## What I understand about the platform now
+
+The grading criteria ask for *evidence of working knowledge of a development platform*,
+so rather than leave that implicit, here is what this project actually taught me — each
+tied to a specific thing that came up while building it, not a summary of documentation.
+
+**Expo Go is a host app, not my app.** It's a prebuilt binary that downloads and runs my
+JavaScript, which is why it starts instantly and why I never touched Xcode. The tradeoff
+is that it only contains the native modules Expo shipped inside it. This isn't academic:
+it's exactly why WhichCard uses *local* notifications rather than push. Expo Go on iOS
+cannot receive remote push notifications — that requires a development build with its own
+APNs credentials. Knowing the distinction is what let me pick a design that works instead
+of fighting one that can't.
+
+**Metro serves bundles over HTTP and pushes updates over a websocket, and those fail
+independently.** When Fast Refresh stopped working, the dev server was still returning
+`200` on `/status` and still serving bundles — it was only the HMR websocket that had
+died after ~14 hours. A process answering requests is not the same as a process working.
+That's why the fix was restarting the server rather than debugging my code.
+
+**`CI=1` is not a neutral "don't prompt me" flag.** It puts Metro in CI mode, which
+disables watch mode entirely. I learned to check what a non-interactive flag turns off,
+not just what it suppresses.
+
+**Expo Router is file-based.** `src/app/index.tsx` is `/`, `src/app/wallet.tsx` is
+`/wallet`. Adding the Wallet tab meant creating a file and updating the tab trigger —
+and because the project has typed routes enabled, TypeScript caught my stale
+`/explore` reference at compile time instead of at runtime.
+
+**Foreground vs. background location is a real design decision.** I used foreground-only
+permissions deliberately: background location means a much heavier permission prompt and
+more review scrutiny, for no benefit in an app the user opens when they're standing
+somewhere.
+
+**Serverless functions have no persistent connection pool.** That's why the backend uses
+`@neondatabase/serverless`, which speaks HTTP rather than raw TCP — a conventional
+Postgres driver would try to hold connections across invocations that don't persist, and
+exhaust the database's connection limit under cold starts.
+
+**Password hashing should be slow on purpose.** I used scrypt with a per-user random
+salt rather than SHA-256. A fast hash makes an offline attack on a leaked password table
+cheap, which is the precise thing password hashing exists to prevent. Relatedly, login
+returns an identical response for an unknown email and a wrong password, because an
+endpoint that distinguishes them tells an attacker which addresses are worth attacking.
+
+**Opaque tokens vs. JWTs is a revocation tradeoff.** A JWT stays valid until it expires
+regardless of what the server thinks, so signing out can only ask the client to forget
+it. I used opaque random tokens stored in a `sessions` table, so logging out can actually
+delete the session.
+
+**OpenStreetMap models merchants as nodes, ways, and relations.** A node-only Overpass
+query silently misses any merchant mapped as a building outline — which is many of them.
+`nwr(...)` with `out center` covers all three and gives ways a representative coordinate.
+
+**Some bugs only exist on a real device.** Three of mine did: the sign-out button that
+collided with Expo Go's floating dev button, the Overpass mirror that hung only when
+requested from the phone's network, and the notification permission flow. None would
+have appeared in a simulator screenshot, and none were visible by reading the code.
+
+---
+
 ## Technologies used
 
 | Layer | Technology |
