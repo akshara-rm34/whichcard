@@ -140,6 +140,26 @@ deliberately never returns individual rows.*
 
 ---
 
+## Technologies used
+
+| Layer | Technology |
+|---|---|
+| Mobile framework | React Native 0.86 via **Expo SDK 57** |
+| Language | **TypeScript** (strict mode), app and backend |
+| Routing | **Expo Router** (file-based) |
+| Device APIs | `expo-location` (GPS), `expo-notifications` (local notifications), `@react-native-async-storage/async-storage` (token storage) |
+| Run target | **Expo Go** on a physical iPhone |
+| Third-party data | **Overpass API** / OpenStreetMap (free, keyless) |
+| Backend runtime | **Vercel Functions** (Node, serverless) |
+| Database | **Neon Postgres** (serverless, free tier) |
+| DB driver | `@neondatabase/serverless` (HTTP, not TCP — no pool to exhaust on cold start) |
+| Auth | **scrypt** password hashing (Node `crypto`) + opaque session tokens |
+| Version control | **Git** / GitHub, issues and labels for task and bug tracking |
+| Tooling | Vercel CLI, GitHub CLI (`gh`), Metro bundler |
+| AI assistance | **Claude Code** — see the disclosure below |
+
+---
+
 ## 3. References
 
 Listed roughly in the order I used them.
@@ -204,10 +224,12 @@ into a team project. I set the hard constraint that **nothing could cost money**
 ruled out the Google Places API and shaped the choice of Overpass and free tiers
 throughout. I decided the order of work (core loop before backend), asked for commits to
 be authored solely by me, and did all the on-device testing — every bug below was found
-by me running the app on my phone and reporting what I saw.
+by me running the app on my phone and reporting what I saw. I also set up the Github repo
+and deployed the backend. Lastly, I made drafts of issues that the AI could polish and add
+to the Github.
 
 **What the AI did.** Wrote the majority of the code, diagnosed failures from the
-symptoms I described, set up the GitHub repo and issues, and deployed the backend.
+symptoms I described, and set up the GitHub issues based on my context.
 
 **What I learned from the experience.** The most useful thing was watching how it
 debugged rather than what it wrote. When "Could not reach Overpass" appeared on my
