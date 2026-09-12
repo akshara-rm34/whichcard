@@ -170,12 +170,7 @@ export default function WalletScreen() {
   return (
     <SafeAreaView style={[styles.screen, { backgroundColor: t.bg }]} edges={['top']}>
       <ScrollView contentContainerStyle={styles.content}>
-        <View style={styles.headerRow}>
-          <Text style={[styles.title, { color: t.text }]}>Your wallet</Text>
-          <Pressable onPress={leave}>
-            <Text style={[styles.signOut, { color: t.accent }]}>Sign out</Text>
-          </Pressable>
-        </View>
+        <Text style={[styles.title, { color: t.text }]}>Your wallet</Text>
         <Text style={[styles.subtitle, { color: t.muted }]}>
           {selected.size} of {ALL_CARDS.length} cards selected
         </Text>
@@ -219,6 +214,10 @@ export default function WalletScreen() {
           <Text style={styles.buttonText}>Save wallet</Text>
         </Pressable>
         {busy && <ActivityIndicator style={styles.spinner} color={t.accent} />}
+
+        <Pressable onPress={leave} style={styles.signOutRow}>
+          <Text style={[styles.signOut, { color: t.muted }]}>Sign out</Text>
+        </Pressable>
       </ScrollView>
     </SafeAreaView>
   );
@@ -228,8 +227,10 @@ const styles = StyleSheet.create({
   screen: { flex: 1 },
   centered: { alignItems: 'center', justifyContent: 'center' },
   content: { paddingHorizontal: 20, paddingTop: 12, paddingBottom: 48 },
-  headerRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
   title: { fontSize: 32, fontWeight: '700', letterSpacing: -0.5 },
+  // Sign out lives at the bottom of the scroll view: the top-right corner is where
+  // Expo Go floats its dev-menu button, which covered anything placed there.
+  signOutRow: { alignItems: 'center', paddingTop: 28, paddingBottom: 8 },
   signOut: { fontSize: 15, fontWeight: '500' },
   subtitle: { fontSize: 14, marginTop: 4, marginBottom: 20, lineHeight: 19 },
   input: { borderWidth: 1, borderRadius: 12, paddingHorizontal: 14, paddingVertical: 13, fontSize: 16, marginBottom: 10 },

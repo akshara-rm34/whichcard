@@ -203,3 +203,17 @@ LOG [overpass] attempt 1 ok in 3768ms (https://overpass-api.de/api/interpreter)
 **Lesson:** redundancy is only redundancy if the backup fails *fast*. An unresponsive
 fallback is a liability, and testing it from a laptop on good wifi would never have
 shown this — it took running on the actual device.
+
+### Problem 9 — sign-out button unreachable behind Expo Go's dev button
+The Wallet screen put "Sign out" in the top-right of the header. On the device it
+couldn't be tapped: Expo Go floats its own dev-menu button in that corner, on top of
+the app.
+
+*Fix:* moved sign-out to the bottom of the scroll view, which is the conventional place
+for it anyway.
+
+**Lesson:** the layout wasn't wrong in itself — it collided with the *host* app's
+overlay. A simulator screenshot wouldn't have revealed it either, since the button is
+there too but easy to ignore when you're clicking with a mouse instead of reaching with
+a thumb. Real-device testing catches a category of problem that reading the code
+cannot.
