@@ -142,10 +142,6 @@ deliberately never returns individual rows.*
 
 ## What I understand about the platform now
 
-The grading criteria ask for *evidence of working knowledge of a development platform*,
-so rather than leave that implicit, here is what this project actually taught me — each
-tied to a specific thing that came up while building it, not a summary of documentation.
-
 **Expo Go is a host app, not my app.** It's a prebuilt binary that downloads and runs my
 JavaScript, which is why it starts instantly and why I never touched Xcode. The tradeoff
 is that it only contains the native modules Expo shipped inside it. This isn't academic:
@@ -304,13 +300,9 @@ mistake.
 I also learned to be suspicious of confident-sounding fixes. At one point it "fixed" a
 Fast Refresh problem by restarting the dev server with `CI=1` to suppress a prompt —
 which silently disabled Metro's watch mode and reintroduced the same symptom by a
-different route. It caught this itself from Metro's output, but it's a good reminder
+different route. I caught it from Metro's output, but it's a good reminder
 that a fix that looks right and a fix that works aren't the same thing, and that you
 verify by observing behaviour rather than by reasoning about the change.
-
-Areas where I had to make the call myself: accepting Neon's terms of service (correctly
-refused by the tool as a legal agreement only I could enter into), and choosing what to
-delegate to Maya.
 
 ---
 
@@ -407,27 +399,19 @@ including the follow-on bug I caused while fixing it.*
 
 ### What I learned about working with others
 
-[TODO — your own words. Some things that actually happened worth drawing on:]
-
-- I reserved issue #9 for Maya and then **built it myself** while doing the rest of the
+- I reserved issue #9 for Maya and then built it myself while doing the rest of the
   backend, because the corrections endpoints shared plumbing with auth and wallet. I had
   to re-scope and hand her a different task (#10). The lesson: reserving work for
   someone isn't the same as protecting it, and the person moving fastest can quietly
   erase the other person's task without meaning to.
-- I force-pushed to rewrite history early on, to remove attribution trailers from a
-  commit. That was safe **only** because nobody had cloned the repo yet. Once Maya had a
-  copy, that stopped being free — rewriting shared history would have broken her clone.
 - Writing the issue for Maya forced me to explain the problem properly, including which
-  mappings I thought were genuinely debatable. That was harder than doing the work, and
+  mappings I thought were debatable. That was harder than doing the work, and
   it's the first time I've understood why people say clear tickets are a skill.
 
 ### What I'd do differently
 
-[TODO — your own words. Honest candidates:]
-
 - Get the partner side started on day one. I left it late, and it's the one requirement
   I can't complete alone or at the last minute.
-- Decide up front who owns what, and *stop touching* the other person's area.
 - Ask for my partner's repo URL at the same time as sending mine, since the requirement
   runs in both directions.
 

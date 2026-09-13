@@ -243,3 +243,61 @@ typed with a regular space doesn't match the file that exists.
 **Lesson:** "the file is right there and the path is obviously correct" is exactly the
 situation where an invisible character is worth suspecting. `od -c` confirmed it:
 `342 200 257` is UTF-8 for U+202F.
+
+---
+
+## 2026-09-13 — Working with a partner
+
+Maya Zhang (`mayazhang1241`) picked up issue #10, expanding the OSM tag-to-category
+mapping.
+
+### Process correction: direct push, then self-reverted
+Her first change went **straight to `main`** (`f46ede6`). She then **reverted it
+herself** (`9c9b699`) and reopened the same work as PR #11. Nobody asked her to — she
+noticed she'd bypassed the agreed process and undid it.
+
+Worth recording because it's the kind of thing that only shows up when two people share
+a repository, and because the fix was hers.
+
+### Review caught a mapping that would have cost users points
+The first version of the PR mapped `shop=department_store` → `groceries` (Target,
+Macy's) and `shop=wholesale` → `groceries` (Costco, Sam's Club).
+
+Checking those against the earning-rate data in `data/cards.json` showed the problem:
+
+```
+capital-one-savor          3x | 3% at grocery stores (excl. superstores)
+amex-gold                  4x | 4x at US supermarkets
+amex-blue-cash-preferred   6x | 6% at US supermarkets
+bofa-customized-cash       2x | 2% at grocery stores and wholesale clubs
+```
+
+Issuers draw a hard line between *supermarkets* and *superstores/warehouse clubs* —
+Capital One's own wording says "excl. superstores," and BofA is the only card in the file
+that includes wholesale clubs at all. So the app would have said *"use your Amex Gold,
+4x"* at a Costco, where it actually earns 1x. That's precisely the failure mode the
+header comment in `categories.ts` warns about.
+
+The sharpest part is that **Maya's own reasoning already contained the answer**. She had
+deliberately left `shop=alcohol` unmapped, writing that "issuers commonly exclude liquor
+stores from grocery bonuses." That's the same argument, and it applies more strongly to
+superstores, where one card spells the exclusion out in the data we already had.
+
+She updated the PR to drop both mappings, keep `shop=coffee` → `dining`, and restore the
+header comment. Approved and merged as `6d1e4a0`.
+
+### Verified on her device
+Maya ran the app on her own iPhone with her own account — her screenshot shows a
+different location, a 5-card wallet, and light mode, which is evidence she built and used
+it rather than only editing a file.
+
+![WhichCard on Maya's device](docs/screenshots/15-partner-device.png)
+
+**Lessons:**
+- A review is worth doing even on a four-line diff. The diff was small; the consequence
+  wasn't.
+- The most useful part of her PR was the section explaining what she *deliberately left
+  out*. Stating the reasoning for a non-change is what made the inconsistency visible.
+- Reserving an issue for someone is not the same as protecting it. I had reserved #9 for
+  Maya and then built it myself while doing adjacent work, and had to re-scope her task
+  to #10. The person moving fastest can erase a collaborator's work without meaning to.
