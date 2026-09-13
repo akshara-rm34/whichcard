@@ -2,6 +2,10 @@
 
 **Name:** Akshara Madarapu
 **Partner:** Maya Zhang (GitHub: `mayazhang1241`)
+
+> **TODO before submitting:** the two reflection sections in §5 — "What I learned about
+> working with others" and "What I'd do differently" — are prompts, not finished answers.
+> Rewrite them in your own words, and edit anything else that doesn't sound like you.
 **Repository:** https://github.com/akshara-rm34/whichcard
 **Live backend API:** https://whichcard-api.vercel.app — health check: https://whichcard-api.vercel.app/api/health
 
@@ -493,6 +497,10 @@ new person — which is exactly who a collaborator is.
 
 ### What I learned about working with others
 
+> **[TODO — REWRITE IN YOUR OWN WORDS.]** The bullets below are prompts from things that
+> actually happened, not your answer. Keep what rings true, cut what doesn't, say it how
+> you'd say it.
+
 - I reserved issue #9 for Maya and then built it myself while doing the rest of the
   backend, because the corrections endpoints shared plumbing with auth and wallet. I had
   to re-scope and hand her a different task (#10). The lesson: reserving work for
@@ -500,6 +508,8 @@ new person — which is exactly who a collaborator is.
   erase the other person's task without meaning to.
 
 ### What I'd do differently
+
+> **[TODO — REWRITE IN YOUR OWN WORDS.]** Same as above — prompts, not an answer.
 
 - Get the partner side started on day one. I left it late, and it's the one requirement
   I can't complete alone or at the last minute.
