@@ -5,11 +5,6 @@
 **Repository:** https://github.com/akshara-rm34/whichcard
 **Live backend API:** https://whichcard-api.vercel.app — health check: https://whichcard-api.vercel.app/api/health
 
-> **TODO before submitting:** three marked spots in §5 still need your own words —
-> what you changed on Maya's repo, what you learned working with someone, and what you'd
-> do differently. The bullets under the last two are prompts drawn from what actually
-> happened, not finished answers. Also edit anything anywhere that doesn't sound like you.
-
 ---
 
 ## 1. What I built
@@ -459,25 +454,52 @@ rather than just asserted. Maya's reply — "oh shoot ur right forgot costco is 
 write in my `DEVLOG.md` (she didn't — it's my log for my writeup; she keeps her own for
 hers, since we submit separately).*
 
-> **[TODO]** Add what you changed on Maya's repo once she sends the link.
+### My change to Maya's repository
+
+The requirement runs both ways, so I also worked on her project —
+[study-space-tracker](https://github.com/mayazhang1241/study-space-tracker), a React
+Native app for finding open study spots on campus, backed by Firebase. She left me
+issue #1: the list view showed each spot's occupancy but never said how fresh that
+number was.
+
+**PR:** https://github.com/mayazhang1241/study-space-tracker/pull/2
+
+![PR on Maya's repo](docs/screenshots/22-pr-on-partner-repo.png)
+
+I made a deliberate choice worth defending: a **relative** time ("Updated 3 min ago")
+rather than the clock format her detail screen uses. Scanning a list, the question you're
+actually asking is *"is this number still true?"*, not what o'clock it was recorded.
+Past an hour the relative form stops being informative, so it falls back to her existing
+`toLocaleTimeString` format — consistent where consistency helps, different where the
+context differs. I said so in the PR and offered to match her format exactly if she
+preferred.
+
+I also kept the `instanceof Date` guard she used on the detail screen, since an
+unconverted Firestore `Timestamp` would throw without it.
+
+**Two things I hit working in someone else's repo:**
+
+- **No push access.** I'd added her as a collaborator on mine, but that isn't reciprocal —
+  my push was rejected with `403`. I forked and opened the PR from the fork, which is
+  how outside contributions normally work anyway.
+- **`npm install` fails on a clean clone of her repo.** It dies with `ERESOLVE`:
+  `react-dom@19.3.0` requires `react@^19.3.0` and the project pins `react@19.2.3`.
+  Anyone cloning it hits this. I used `--legacy-peer-deps` to get moving and flagged it
+  in the PR with the fix (`npx expo install --check`).
+
+That second one is the part I'd have missed by only working in my own repo: the project
+ran fine for her, because her `node_modules` predated the mismatch. It only breaks for a
+new person — which is exactly who a collaborator is.
 
 ### What I learned about working with others
-
-> **[TODO — REWRITE IN YOUR OWN WORDS.]** These are prompts from what actually happened,
-> not your answer. Keep what rings true, cut what doesn't, say it how you'd say it.
 
 - I reserved issue #9 for Maya and then built it myself while doing the rest of the
   backend, because the corrections endpoints shared plumbing with auth and wallet. I had
   to re-scope and hand her a different task (#10). The lesson: reserving work for
   someone isn't the same as protecting it, and the person moving fastest can quietly
   erase the other person's task without meaning to.
-- Writing the issue for Maya forced me to explain the problem properly, including which
-  mappings I thought were debatable. That was harder than doing the work, and
-  it's the first time I've understood why people say clear tickets are a skill.
 
 ### What I'd do differently
-
-> **[TODO — REWRITE IN YOUR OWN WORDS.]** Same as above — prompts, not an answer.
 
 - Get the partner side started on day one. I left it late, and it's the one requirement
   I can't complete alone or at the last minute.
