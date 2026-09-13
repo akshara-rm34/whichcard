@@ -7,8 +7,7 @@
  * telling someone to pull out a 4x dining card at a hardware store costs them
  * real points.
  *
- * OSM tagging is inconsistent in ways no static table can fix (Target is
- * shop=department_store and maps to nothing; a Costco fuel pump is amenity=fuel
+ * OSM tagging is inconsistent in ways no static table can fix (a Costco fuel pump is amenity=fuel
  * sitting inside shop=wholesale). That's what the crowdsourced corrections
  * feature is for — see issue #9.
  */
@@ -54,8 +53,11 @@ const SHOP: Record<string, SpendCategory> = {
   deli: 'groceries',
   convenience: 'groceries',
   farm: 'groceries',
+  department_store: 'groceries',
+  wholesale: 'groceries',
   chemist: 'drugstores',
   gas: 'gas',
+  coffee: 'dining',
 };
 
 /** tourism=<value> → category */
