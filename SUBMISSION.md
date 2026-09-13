@@ -5,8 +5,10 @@
 **Repository:** https://github.com/akshara-rm34/whichcard
 **Live backend API:** https://whichcard-api.vercel.app — health check: https://whichcard-api.vercel.app/api/health
 
-> **TODO before submitting:** fill in the partner sections (§5) once Maya's PR lands,
-> and edit anything that doesn't sound like you.
+> **TODO before submitting:** three marked spots in §5 still need your own words —
+> what you changed on Maya's repo, what you learned working with someone, and what you'd
+> do differently. The bullets under the last two are prompts drawn from what actually
+> happened, not finished answers. Also edit anything anywhere that doesn't sound like you.
 
 ---
 
@@ -442,16 +444,14 @@ from grocery bonuses" — the same argument, applying more strongly to superstor
 one card spells the exclusion out in data we already had. She updated the PR to drop both
 mappings and keep `shop=coffee`.
 
-[TODO — add anything else in your own words. Other points you could cover:]
-
-- How we split the work: I took the app and backend; Maya took issue #10, expanding the
-  OSM tag-to-category mapping.
-- Why I asked for a PR rather than a direct push to `main`.
-- What she changed, and what happened when I pulled it.
-- What I changed on her repository.
-- Any merge conflicts or setup problems she hit, and how we resolved them.
+> **[TODO]** Two things still to add here once you've pushed to Maya's repo:
+> what you changed on hers, and how you two actually communicated day to day
+> (we coordinated over iMessage — a screenshot of that thread belongs here).
 
 ### What I learned about working with others
+
+> **[TODO — REWRITE IN YOUR OWN WORDS.]** These are prompts from what actually happened,
+> not your answer. Keep what rings true, cut what doesn't, say it how you'd say it.
 
 - I reserved issue #9 for Maya and then built it myself while doing the rest of the
   backend, because the corrections endpoints shared plumbing with auth and wallet. I had
@@ -463,6 +463,8 @@ mappings and keep `shop=coffee`.
   it's the first time I've understood why people say clear tickets are a skill.
 
 ### What I'd do differently
+
+> **[TODO — REWRITE IN YOUR OWN WORDS.]** Same as above — prompts, not an answer.
 
 - Get the partner side started on day one. I left it late, and it's the one requirement
   I can't complete alone or at the last minute.
