@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>WhichCard API</title>
+<style>
+  :root { color-scheme: light dark; --fg:#11181C; --muted:#687076; --bg:#fff; --line:#e1e6e9; --accent:#0a7ea4; --code:#f1f5f7; }
+  @media (prefers-color-scheme: dark) {
+    :root { --fg:#ECEDEE; --muted:#9BA1A6; --bg:#151718; --line:#2e3338; --accent:#4FC3E8; --code:#22262a; }
+  }
+  * { box-sizing: border-box; }
+  body { margin:0; padding:48px 24px; background:var(--bg); color:var(--fg);
+         font:15px/1.6 -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif; }
+  main { max-width: 760px; margin: 0 auto; }
+  h1 { font-size: 30px; margin:0 0 4px; letter-spacing:-0.5px; }
+  .sub { color:var(--muted); margin:0 0 32px; }
+  a { color:var(--accent); }
+  table { width:100%; border-collapse:collapse; margin: 8px 0 28px; }
+  th, td { text-align:left; padding:9px 10px; border-bottom:1px solid var(--line); vertical-align:top; }
+  th { font-size:12px; text-transform:uppercase; letter-spacing:.06em; color:var(--muted); font-weight:600; }
+  code { background:var(--code); padding:2px 6px; border-radius:5px;
+         font:13px/1.5 ui-monospace, SFMono-Regular, Menlo, monospace; }
+  .m { font-weight:600; font-size:12px; }
+  footer { color:var(--muted); font-size:13px; border-top:1px solid var(--line); padding-top:18px; }
+</style>
+</head>
+<body>
+<main>
+  <h1>WhichCard API</h1>
+  <p class="sub">
+    Backend for <a href="https://github.com/akshara-rm34/whichcard">WhichCard</a>, a
+    location-aware credit-card rewards picker. Vercel Functions + Neon Postgres.
+  </p>
+
+  <table>
+    <tr><th>Method</th><th>Path</th><th>Auth</th><th>Purpose</th></tr>
+    <tr><td class="m">GET</td><td><code><a href="/api/health">/api/health</a></code></td><td>—</td><td>liveness check</td></tr>
+    <tr><td class="m">POST</td><td><code>/api/auth/signup</code></td><td>—</td><td>create an account</td></tr>
+    <tr><td class="m">POST</td><td><code>/api/auth/login</code></td><td>—</td><td>sign in, returns a token</td></tr>
+    <tr><td class="m">GET</td><td><code>/api/wallet</code></td><td>Bearer</td><td>the signed-in user's cards</td></tr>
+    <tr><td class="m">PUT</td><td><code>/api/wallet</code></td><td>Bearer</td><td>replace the wallet</td></tr>
+    <tr><td class="m">GET</td><td><code>/api/corrections?osmId=</code></td><td>—</td><td>community category for a merchant</td></tr>
+    <tr><td class="m">POST</td><td><code>/api/corrections</code></td><td>Bearer</td><td>vote on a merchant's category</td></tr>
+    <tr><td class="m">POST</td><td><code>/api/events</code></td><td>optional</td><td>record a usage event</td></tr>
+    <tr><td class="m">GET</td><td><code><a href="/api/events">/api/events</a></code></td><td>—</td><td>aggregate counts only</td></tr>
+  </table>
+
+  <footer>
+    Authenticate with <code>Authorization: Bearer &lt;token&gt;</code>.
+    Full documentation in
+    <a href="https://github.com/akshara-rm34/whichcard/blob/main/server/README.md">server/README.md</a>.
+  </footer>
+</main>
+</body>
+</html>
