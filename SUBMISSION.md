@@ -444,9 +444,22 @@ from grocery bonuses" — the same argument, applying more strongly to superstor
 one card spells the exclusion out in data we already had. She updated the PR to drop both
 mappings and keep `shop=coffee`.
 
-> **[TODO]** Two things still to add here once you've pushed to Maya's repo:
-> what you changed on hers, and how you two actually communicated day to day
-> (we coordinated over iMessage — a screenshot of that thread belongs here).
+We coordinated over iMessage throughout — quick and low-friction, with GitHub carrying
+anything that needed to be precise (the issue description, the PR, the review).
+
+![Review conversation](docs/screenshots/20-coordination-review.png)
+
+*The review, relayed over text with the card data quoted so the reasoning was checkable
+rather than just asserted. Maya's reply — "oh shoot ur right forgot costco is wholesale"
+— and she updated the PR straight away.*
+
+![Coordination messages](docs/screenshots/21-coordination-messages.png)
+
+*Asking for proof she'd run it on her own device, and answering whether she needed to
+write in my `DEVLOG.md` (she didn't — it's my log for my writeup; she keeps her own for
+hers, since we submit separately).*
+
+> **[TODO]** Add what you changed on Maya's repo once she sends the link.
 
 ### What I learned about working with others
 
