@@ -388,7 +388,61 @@ including the follow-on bug I caused while fixing it.*
 
 ### Coordination with Maya
 
-[TODO — fill in after Maya's PR lands. Points to cover:]
+We split the work by area: I took the app and the backend, Maya took issue #10,
+expanding the OpenStreetMap tag-to-category mapping. I asked her to open a pull request
+rather than push to `main`, so the review would be visible in the history.
+
+![PR #11 merged](docs/screenshots/16-pr-11-merged.png)
+
+*Pull request #11. Maya's two commits, my approval, and the merge. Her PR description
+documented not just what she mapped but what she **deliberately left unmapped**, and why
+— that section turned out to matter.*
+
+![PR diff](docs/screenshots/17-pr-11-diff.png)
+
+*The final diff: `shop=coffee` → `dining` added, and the file header comment restored.*
+
+![Commits including Maya's](docs/screenshots/18-commits-with-partner.png)
+
+*`main` after the merge — Maya's commits alongside mine, including the revert described
+below.*
+
+![All issues](docs/screenshots/19-issues-all.png)
+
+*Issue tracking across the project: 9 closed, 1 open. #10 was closed automatically by
+her PR.*
+
+![WhichCard on Maya's device](docs/screenshots/15-partner-device.png)
+
+*Maya running the app on her own iPhone: her location, her own account with a 5-card
+wallet, light mode. Evidence she built and used it rather than only editing a file.*
+
+**Two things happened worth recording.**
+
+First, her initial change went **straight to `main`** (`f46ede6`). She then **reverted it
+herself** (`9c9b699`) and reopened the same work as a pull request — nobody asked her to.
+
+Second, the review caught a real bug. Her first version mapped
+`shop=department_store` → `groceries` (Target) and `shop=wholesale` → `groceries`
+(Costco). Checking that against our own card data showed the problem:
+
+```
+capital-one-savor          3x | 3% at grocery stores (excl. superstores)
+amex-gold                  4x | 4x at US supermarkets
+bofa-customized-cash       2x | 2% at grocery stores and wholesale clubs
+```
+
+Issuers draw a hard line between supermarkets and superstores or warehouse clubs. The app
+would have said *"use your Amex Gold, 4x"* at a Costco, where it earns 1x — exactly the
+failure the file's header comment warns about.
+
+The interesting part is that **her own reasoning already contained the answer.** She had
+deliberately left `shop=alcohol` unmapped because "issuers commonly exclude liquor stores
+from grocery bonuses" — the same argument, applying more strongly to superstores, where
+one card spells the exclusion out in data we already had. She updated the PR to drop both
+mappings and keep `shop=coffee`.
+
+[TODO — add anything else in your own words. Other points you could cover:]
 
 - How we split the work: I took the app and backend; Maya took issue #10, expanding the
   OSM tag-to-category mapping.
