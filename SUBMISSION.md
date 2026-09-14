@@ -470,6 +470,15 @@ number was.
 
 ![PR on Maya's repo](docs/screenshots/22-pr-on-partner-repo.png)
 
+*Merged by Maya, so the commit is in her repository's history:*
+
+```
+83bf540  Maya Zhang    Merge pull request #2 from akshara-rm34/feat/spotcard-last-updated
+fbc9a33  mayazhang     Add expo-linking dependency to package.json
+8c60eaa  akshara-rm34  Show last-updated time on SpotCard
+79553ec  mayazhang     refactor: simplify tab icons and update favorite heart styles
+```
+
 I made a deliberate choice worth defending: a **relative** time ("Updated 3 min ago")
 rather than the clock format her detail screen uses. Scanning a list, the question you're
 actually asking is *"is this number still true?"*, not what o'clock it was recorded.
