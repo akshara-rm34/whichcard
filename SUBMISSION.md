@@ -93,7 +93,7 @@ Gold to 2x Capital One Venture. Anyone else opening the app sees that same corre
 |---|---|---|
 | 1 | Install a development environment | Expo SDK 57 / React Native, Node 26, on macOS |
 | 2 | Build a sample app, run it on a **device** | Stock `expo-router` template built and run on my iPhone via Expo Go, then evolved into WhichCard. Commit `a4747ef` is the unmodified template |
-| 3 | Check code into version control, track tasks | https://github.com/akshara-rm34/whichcard — 6 commits, 10 GitHub issues used for tasks and bugs |
+| 3 | Check code into version control, track tasks | https://github.com/akshara-rm34/whichcard — 26 commits, 10 issues and 2 pull requests used for tasks, bugs and review |
 | 4 | Partner checks out, changes, tests, pushes back | See §5 |
 | 5 | Deploy a web service with storage + REST | https://whichcard-api.vercel.app — Vercel serverless functions + Neon Postgres, 9 endpoints |
 
@@ -355,6 +355,8 @@ curl -X POST $API/api/auth/signup \
 
 ### Commit history
 
+26 commits across five days. The ones that mark real stages:
+
 | Commit | What |
 |---|---|
 | `a4747ef` | Initial commit — the unmodified Expo sample template (55 files) |
@@ -364,19 +366,21 @@ curl -X POST $API/api/auth/signup \
 | `4eef44d` | Deployed to Vercel with Neon Postgres, added migration script |
 | `d112c7d` | Wired the app to the backend, corrections UI, local notifications |
 | `5a06582` | Fixed sign-out button hidden behind Expo Go's dev button |
+| `f46ede6`–`9c9b699` | Maya's direct push to `main`, then her own revert of it |
+| `6d1e4a0` | Merged Maya's PR #11 after review |
+| `5153d7a` | Index page at the API root, so the bare domain isn't a 404 |
 
 Issues were used for tasks and bugs, not just as a checklist — issue #8 is a bug I hit,
 diagnosed, fixed, and closed with the explanation attached.
 
 ![Commit history](docs/screenshots/13-commit-history.png)
 
-*Eight commits across three days, each with a message explaining the reasoning rather
-than just the change.*
+*Commit history partway through, each message explaining the reasoning rather than just
+the change.*
 
 ![Issues](docs/screenshots/11-github-issues.png)
 
-*Issues used to track the work: 7 closed, 3 open. Two are labelled `partner` and
-reserved for Maya.*
+*Issues used to track the work. Two were labelled `partner` and reserved for Maya.*
 
 ![Issue 8](docs/screenshots/12-issue-8-closed-bug.png)
 
