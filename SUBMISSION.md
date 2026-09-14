@@ -504,6 +504,19 @@ That second one is the part I'd have missed by only working in my own repo: the 
 ran fine for her, because her `node_modules` predated the mismatch. It only breaks for a
 new person — which is exactly who a collaborator is.
 
+### Running her change on my device
+
+The requirement closes the loop: after Maya's change was merged I pulled it, rebuilt, and
+ran the app on my iPhone again.
+
+![App after merging Maya's change](docs/screenshots/23-after-merging-partner-change.png)
+
+Her change was `shop=coffee` → `dining`. Worth being precise about what this screenshot
+does and doesn't show: in OpenStreetMap `shop=coffee` means a shop selling coffee *beans*,
+while cafes are `amenity=cafe` and were already mapped — so unless there's a bean shop
+within 400m, her mapping won't visibly fire. What this shows is that I fetched her merged
+code, rebuilt it, and ran it on my device without anything breaking.
+
 ### What I learned about working with others
 
 - I reserved issue #9 for Maya and then built it myself while I got caught up doing the rest of
